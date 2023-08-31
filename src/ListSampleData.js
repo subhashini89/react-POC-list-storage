@@ -27,7 +27,7 @@ export default function ListSampleData() {
               <div>{e.brand}</div>
               <ul>
                 {e.images &&
-                  e.images.map((img) => {
+                  e.images.slice(0, 3).map((img) => {
                     return (
                       <li
                         style={{
