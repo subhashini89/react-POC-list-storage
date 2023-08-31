@@ -3,7 +3,7 @@ import './style.css';
 
 export default function ListSampleData() {
   const [sampleData, setSampleData] = React.useState();
-  const [getvalue, setVal] = React.useState();
+  const [getvalue, setVal] = React.useState({});
 
   React.useEffect(() => {
     fetch('https://dummyjson.com/products')
@@ -11,12 +11,14 @@ export default function ListSampleData() {
       .then((data) => setSampleData(data));
   }, []);
   console.log(sampleData && sampleData.products);
-  const imageClick = (e) => {
+  const imageClick = (e, img) => {
     localStorage.setItem('price', e);
+    localStorage.setItem('imgPath', img);
   };
   const doubleImageClick = (e) => {
-    const value = localStorage.getItem('price', e);
-    setVal(value);
+    const value = localStorage.getItem('price');
+    const imgPath = localStorage.getItem('imgPath');
+    if (e == imgPath) setVal({ value: value, imgPath: imgPath });
   };
   return (
     <div>
@@ -35,11 +37,11 @@ export default function ListSampleData() {
                           display: 'inline',
                           marginLeft: '20px',
                         }}
-                        onClick={() => imageClick(e.price)}
-                        onDoubleClick={() => doubleImageClick()}
+                        onClick={() => imageClick(e.price, e.brand)}
+                        onDoubleClick={() => doubleImageClick(e.brand)}
                       >
                         <img style={{ width: '30px' }} src={img} />
-                        {getvalue}
+                        {getvalue.imgPath}
                       </li>
                     );
                   })}
